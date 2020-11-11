@@ -1,0 +1,3 @@
+[submodule "thirdpart/libdmtx"]
+	path = thirdpart/libdmtx
+	url = https://github.com/dmtx/libdmtx.git

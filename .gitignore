@@ -1,0 +1,6 @@
+debug/
+release/
+*.user
+*.vcxproj
+*.filters
+*.stash
