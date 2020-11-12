@@ -1,5 +1,5 @@
 ﻿#include "qdmtxdata.h"
-
+#include <dmtx.h>
 QdmtxData::QdmtxData(QObject *parent) : QObject(parent)
 {
 
@@ -19,7 +19,7 @@ QString QdmtxData::message(int i)
     if(i < messages.size())
         return "";
 
-    std::string _msg(reinterpret_cast<char*>(messages.at(i)->output));
+    std::string _msg(reinterpret_cast<char*>(static_cast<DmtxMessage*>(messages.at(i))->output));
 
     return QString::fromStdString(_msg);
 }
@@ -30,14 +30,17 @@ int QdmtxData::destory()
 
         auto msg = messages.front();
         messages.pop_front();
-        dmtxMessageDestroy(&msg);
+        DmtxMessage* m_ptr = static_cast<DmtxMessage*>(msg);
+        dmtxMessageDestroy(&m_ptr);
 
         auto reg = dataMatrixs.front();
         dataMatrixs.pop_front();
-        dmtxRegionDestroy(&reg);
+        DmtxRegion* r_ptr = static_cast<DmtxRegion*>(reg);
+        dmtxRegionDestroy(&r_ptr);
 
     }
-    dmtxImageDestroy(&imgdtx);
+    DmtxImage* i_ptr = static_cast<DmtxImage*>(imgdtx);
+    dmtxImageDestroy(&i_ptr);
     return 0;
 }
 

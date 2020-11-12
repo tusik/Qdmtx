@@ -13,8 +13,8 @@ public:
     long maxTimeout = 200;
 
 
-    QdmtxData decodeFromDataMatrix(QImage& pic);
-    QdmtxData decodeFromDataMatrix(QString path);
+    [[nodiscard]]QdmtxData decodeFromDataMatrix(QImage& pic);
+    [[nodiscard]]QdmtxData decodeFromDataMatrix(QString path);
     QImage encodeToDataMatrix(QString& content);
 
 };

@@ -1,6 +1,7 @@
 ﻿#include "qdmtx.h"
 #include "qdmtxdata.h"
 #include <QDir>
+#include <dmtx.h>
 Qdmtx::Qdmtx()
 {
 }
@@ -20,9 +21,10 @@ QdmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
 
     DmtxTime stopTime = dmtxTimeAdd(beginTime, maxTimeout);
 
-    qdd.imgdtx = dmtxImageCreate(pic.bits(),pic.width(),pic.height(),DmtxPack32bppXRGB);
+    auto img_ptr = dmtxImageCreate(pic.bits(),pic.width(),pic.height(),DmtxPack32bppXRGB);
+    qdd.imgdtx = static_cast<QdmtxImage*>(img_ptr);
     assert(qdd.imgdtx != NULL);
-    DmtxDecode *dec = dmtxDecodeCreate(qdd.imgdtx, 1);
+    DmtxDecode *dec = dmtxDecodeCreate(img_ptr, 1);
     assert(dec != NULL);
     DmtxRegion *reg = nullptr;
     while((reg = dmtxRegionFindNext(dec,&stopTime)) != nullptr){
@@ -35,9 +37,9 @@ QdmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
         {
             if (reg != nullptr)
             {
-                qdd.dataMatrixs.push_back(reg);
+                qdd.dataMatrixs.push_back(static_cast<QdmtxRegion*>(reg));
                 auto msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
-                qdd.messages.push_back(msg);
+                qdd.messages.push_back(static_cast<QdmtxMessage*>(msg));
                 if (msg != nullptr)
                 {
 

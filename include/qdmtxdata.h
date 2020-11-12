@@ -3,8 +3,10 @@
 #include "Qdmtx_global.h"
 #include <assert.h>
 #include <QObject>
-#include <dmtx.h>
 #include <QVector>
+typedef void QdmtxRegion;
+typedef void QdmtxMessage;
+typedef void QdmtxImage;
 class QDMTX_EXPORT QdmtxData : public QObject
 {
     Q_OBJECT
@@ -14,10 +16,10 @@ public:
     QString message(int i);
     int destory();
     ~QdmtxData();
-    QVector<DmtxRegion*> dataMatrixs;
-    QVector<DmtxMessage*> messages;
+    QVector<QdmtxRegion*> dataMatrixs;
+    QVector<QdmtxMessage*> messages;
 public:
-    DmtxImage *imgdtx = nullptr;
+    QdmtxImage *imgdtx = nullptr;
 
 signals:
 
