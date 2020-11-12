@@ -1,11 +1,11 @@
 ﻿#include "qdmtxdata.h"
 
-QDmtxData::QDmtxData(QObject *parent) : QObject(parent)
+QdmtxData::QdmtxData(QObject *parent) : QObject(parent)
 {
 
 }
 
-QDmtxData::QDmtxData(const QDmtxData &qdd)
+QdmtxData::QdmtxData(const QdmtxData &qdd)
 {
     this->messages      =   qdd.messages;
     this->dataMatrixs   =   qdd.dataMatrixs;
@@ -13,7 +13,7 @@ QDmtxData::QDmtxData(const QDmtxData &qdd)
 
 }
 
-QString QDmtxData::message(int i)
+QString QdmtxData::message(int i)
 {
     assert(i < messages.size());
     if(i < messages.size())
@@ -24,7 +24,7 @@ QString QDmtxData::message(int i)
     return QString::fromStdString(_msg);
 }
 
-int QDmtxData::destory()
+int QdmtxData::destory()
 {
     while(!messages.empty()){
 
@@ -41,7 +41,7 @@ int QDmtxData::destory()
     return 0;
 }
 
-QDmtxData::~QDmtxData()
+QdmtxData::~QdmtxData()
 {
 //    dmtxMessageDestroy(&msg);
 

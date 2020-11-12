@@ -5,61 +5,65 @@ Qdmtx::Qdmtx()
 {
 }
 
-QDmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
+QdmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
 {
-    QDmtxData qdd;
-    //简化版本
+    QdmtxData qdd;
+
     QTime time;
     QString outstr;
 
-    time.start();//qt开始计时
-    qDebug()<<"src.format() "<<pic.format();//注意图片格式要对应 dmtxImageCreate的 不然无法解码
+    time.start();
+    qDebug()<<"src.format() "<<pic.format();
 
-    // 增加超时时间。
-    DmtxTime beginTime = dmtxTimeNow();	// 根据系统设置情况，获得当前时间
 
-    DmtxTime stopTime = dmtxTimeAdd(beginTime, maxTimeout);	// 增加xx ms
+    DmtxTime beginTime = dmtxTimeNow();
 
-    //创建dmtxImage，将qt读取到的图片存储到dmtxImage
+    DmtxTime stopTime = dmtxTimeAdd(beginTime, maxTimeout);
+
     qdd.imgdtx = dmtxImageCreate(pic.bits(),pic.width(),pic.height(),DmtxPack32bppXRGB);
     assert(qdd.imgdtx != NULL);
-    DmtxDecode *dec = dmtxDecodeCreate(qdd.imgdtx, 1);//解码
+    DmtxDecode *dec = dmtxDecodeCreate(qdd.imgdtx, 1);
     assert(dec != NULL);
     DmtxRegion *reg = nullptr;
     while((reg = dmtxRegionFindNext(dec,&stopTime)) != nullptr){
-        //查找下一个，如果超时则认为没有找到
 
         if(dmtxTimeExceeded(stopTime))
         {
-            qDebug()<<"超时";
+            qDebug()<<"datamatrix decode timeout.";
         }
         else
         {
             if (reg != nullptr)
             {
                 qdd.dataMatrixs.push_back(reg);
-                auto msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);//获取解码信息
+                auto msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
                 qdd.messages.push_back(msg);
                 if (msg != nullptr)
                 {
 
 
                 }
-                else{qDebug()<<"无法检测到2";}
+                else
+                {
+                    qDebug()<<"Null messages.";
+                }
             }
-            else{qDebug()<<"无法检测到1";}
+            else
+            {
+                qDebug()<<"Null region found.";
+            }
         }
         qDebug()<<time.elapsed()/1000.0<<"s";
     }
-
+    dmtxDecodeDestroy(&dec);
     return qdd;
 }
 
-QDmtxData Qdmtx::decodeFromDataMatrix(QString path)
+QdmtxData Qdmtx::decodeFromDataMatrix(QString path)
 {
-    QDmtxData qdd;
+    QdmtxData qdd;
     assert(QFile(path).exists());
-    QImage src(path);//路径
+    QImage src(path);
     return decodeFromDataMatrix(src);
 }
 

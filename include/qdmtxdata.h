@@ -5,15 +5,15 @@
 #include <QObject>
 #include <dmtx.h>
 #include <QVector>
-class QDMTX_EXPORT QDmtxData : public QObject
+class QDMTX_EXPORT QdmtxData : public QObject
 {
     Q_OBJECT
 public:
-    explicit QDmtxData(QObject *parent = nullptr);
-    QDmtxData(const QDmtxData& qdd);
+    explicit QdmtxData(QObject *parent = nullptr);
+    QdmtxData(const QdmtxData& qdd);
     QString message(int i);
     int destory();
-    ~QDmtxData();
+    ~QdmtxData();
     QVector<DmtxRegion*> dataMatrixs;
     QVector<DmtxMessage*> messages;
 public:

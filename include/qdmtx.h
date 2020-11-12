@@ -5,7 +5,7 @@
 #include <QImage>
 #include <QTime>
 #include <QDebug>
-class QDmtxData;
+class QdmtxData;
 class QDMTX_EXPORT Qdmtx
 {
 public:
@@ -13,8 +13,8 @@ public:
     long maxTimeout = 200;
 
 
-    QDmtxData decodeFromDataMatrix(QImage& pic);
-    QDmtxData decodeFromDataMatrix(QString path);
+    QdmtxData decodeFromDataMatrix(QImage& pic);
+    QdmtxData decodeFromDataMatrix(QString path);
     QImage encodeToDataMatrix(QString& content);
 
 };
