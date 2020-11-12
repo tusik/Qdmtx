@@ -42,24 +42,7 @@ QDmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
                 qdd.messages.push_back(msg);
                 if (msg != nullptr)
                 {
-                    qDebug() << msg->output << endl;//输出解码信息
-                    qDebug() << msg->outputIdx << endl;
 
-                    //qt输出解码信息string->QString
-                    std::string strout = (char*)msg->output;//解码信息
-                    outstr=QString::fromStdString(strout);
-                    qDebug()<<"解码信息:"<<outstr;//解码信息
-                    qDebug()<<"解码信息xx:"<<msg->output;//解码信息
-
-                    //二维码坐标信息
-                    qDebug()<<"reg->leftLine.locPos.X "<<reg->leftLine.locPos.X;
-                    qDebug()<<"reg->leftLine.locPos.Y "<<reg->leftLine.locPos.Y;
-                    qDebug()<<"reg->leftLine.locNeg.X "<<reg->leftLine.locNeg.X;
-                    qDebug()<<"reg->leftLine.locNeg.Y "<<reg->leftLine.locNeg.Y;
-                    qDebug()<<"bottomLine.locPos.X "<<reg->bottomLine.locPos.X;
-                    qDebug()<<"bottomLine.locPos.Y "<<reg->bottomLine.locPos.Y;
-                    qDebug()<<"bottomLine.locNeg.X "<<reg->bottomLine.locNeg.X;
-                    qDebug()<<"bottomLine.locNeg.y "<<reg->bottomLine.locNeg.Y;
 
                 }
                 else{qDebug()<<"无法检测到2";}
@@ -82,8 +65,6 @@ QDmtxData Qdmtx::decodeFromDataMatrix(QString path)
 
 QImage Qdmtx::encodeToDataMatrix(QString &content)
 {
-//    QTime time;
-//    time.start();
     assert(content.size()<=256);
     DmtxEncode     *enc;
     enc = dmtxEncodeCreate();
@@ -98,14 +79,10 @@ QImage Qdmtx::encodeToDataMatrix(QString &content)
     int height = dmtxImageGetProp(enc->image, DmtxPropHeight);
     int bytesPerPixel = dmtxImageGetProp(enc->image, DmtxPropBytesPerPixel);
     int bytesPerLine = dmtxImageGetProp(enc->image, DmtxPropRowSizeBytes);
-//    qDebug()<<time.elapsed()/1000.0<<"s";
-//    uchar *pxlData = (uchar *)malloc(width*height*bytesPerPixel);
-//    memcpy(pxlData,enc->image->pxl,width*height*bytesPerPixel);
 
-//    qDebug()<<time.elapsed()/1000.0<<"s";
     QImage img ;
     img=QImage(enc->image->pxl,width,height,bytesPerLine,QImage::Format_RGB888).copy();
-//    qDebug()<<time.elapsed()/1000.0<<"s";
+
     dmtxEncodeDestroy(&enc);
     return img;
 }
