@@ -18,8 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    qdmtx.cpp \
-    qdmtxdata.cpp \
+    src/qdmtx.cpp \
+    src/qdmtxdata.cpp \
     thirdpart/libdmtx/dmtx.c \
     thirdpart/libdmtx/dmtxbytelist.c \
     thirdpart/libdmtx/dmtxdecode.c \
@@ -44,9 +44,9 @@ SOURCES += \
     thirdpart/libdmtx/dmtxvector2.c
 
 HEADERS += \
-    Qdmtx_global.h \
-    qdmtx.h \
-    qdmtxdata.h \
+    include/Qdmtx_global.h \
+    include/qdmtx.h \
+    include/qdmtxdata.h \
     thirdpart/libdmtx/dmtx.h \
     thirdpart/libdmtx/dmtxstatic.h
 
@@ -59,3 +59,4 @@ unix {
 
 DESTDIR = ../../bin
 INCLUDEPATH += thirdpart/libdmtx
+INCLUDEPATH += include

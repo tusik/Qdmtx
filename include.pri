@@ -1,2 +1,3 @@
-DESTDIR = ../../bin
+
 INCLUDEPATH += thirdpart/libdmtx
+INCLUDEPATH += include
