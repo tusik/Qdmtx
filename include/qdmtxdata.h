@@ -4,9 +4,15 @@
 #include <assert.h>
 #include <QObject>
 #include <QVector>
+#include <QList>
 typedef void QdmtxRegion;
 typedef void QdmtxMessage;
 typedef void QdmtxImage;
+class QDMTX_EXPORT QdmtxDataStruct{
+public:
+    QdmtxRegion*    reg         = nullptr   ;
+    QdmtxMessage*   message     = nullptr   ;
+};
 class QDMTX_EXPORT QdmtxData : public QObject
 {
     Q_OBJECT
@@ -16,8 +22,7 @@ public:
     QString message(int i);
     int destory();
     ~QdmtxData();
-    QVector<QdmtxRegion*> dataMatrixs;
-    QVector<QdmtxMessage*> messages;
+    QList<QdmtxDataStruct> dataMatrixs;
 public:
     QdmtxImage *imgdtx = nullptr;
 

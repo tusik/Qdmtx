@@ -37,18 +37,20 @@ QdmtxData Qdmtx::decodeFromDataMatrix(QImage &pic)
         {
             if (reg != nullptr)
             {
-                qdd.dataMatrixs.push_back(static_cast<QdmtxRegion*>(reg));
+                QdmtxDataStruct qds;
+                qds.reg = reg;
+
                 auto msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
-                qdd.messages.push_back(static_cast<QdmtxMessage*>(msg));
                 if (msg != nullptr)
                 {
-
+                    qds.message = msg;
 
                 }
                 else
                 {
                     qDebug()<<"Null messages.";
                 }
+                qdd.dataMatrixs.push_back(qds);
             }
             else
             {
