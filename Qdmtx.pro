@@ -1,3 +1,4 @@
+
 include(include.pri)
 #QT -= gui
 
@@ -55,8 +56,8 @@ unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
-
-
-DESTDIR = ../../bin
+defined(DEST_PATH, var){
+    DESTDIR = $$DEST_PATH
+}
 INCLUDEPATH += thirdpart/libdmtx
 INCLUDEPATH += include
